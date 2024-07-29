@@ -3,7 +3,7 @@ namespace BEAPI\Clear_Opcache;
 
 class Clear_Opcache {
 
-	private $secret = 'yuriltgvurdgmxdoxmgvqwdbkkzvloeo';
+	private $secret = RESET_OPCACHE_SECRET;
 
 	public function __construct() {
 		add_action( 'plugins_loaded', [ $this, 'clear_opcache'] );
@@ -77,5 +77,9 @@ class Clear_Opcache {
 		}
 	}
 
+}
+// Constant to be defined as env var
+if ( ! defined( 'RESET_OPCACHE_SECRET' ) ) {
+	return;
 }
 new Clear_Opcache();
