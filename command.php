@@ -3,9 +3,10 @@ namespace BEAPI\Clear_Opcache;
 
 class Clear_Opcache {
 
-	private $secret = RESET_OPCACHE_SECRET;
+	private $secret;
 
 	public function __construct() {
+		$this->secret = RESET_OPCACHE_SECRET ?? '';
 		add_action( 'plugins_loaded', [ $this, 'clear_opcache'] );
 		if ( defined( 'WP_CLI' ) ) {
 			\WP_CLI::add_command( 'clear-opcache', [ $this, 'clear_command'] );
@@ -40,7 +41,7 @@ class Clear_Opcache {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *  wp clear-opcache --url=https://staging.mydomain.com --host=uat.kiloutou.com --servers=integ-www-01a,integ-www-01b
+	 *  wp clear-opcache --url=https://staging.mydomain.com --host=staging.mydomain.com --servers=srv-www-1,srv-www-2
 	 *
 	 * @author Ingrid Azéma
 	 */
@@ -51,7 +52,7 @@ class Clear_Opcache {
 		}
 
 		if ( empty( $assoc_args ) || ( empty( $assoc_args['host'] ) && empty( $assoc_args['servers'] ) ) ) {
-			\WP_CLI::error( 'Please provide a host name (ex. --host=uat.kiloutou.com) and at least 1 server-name (ex. --servers=integ-www-01a)'  );
+			\WP_CLI::error( 'Please provide a host name (ex. --host=staging.mydomain.com) and at least 1 server-name (ex. --servers=srv-www-1,srv-www-2)'  );
 		}
 
 		$servers = explode( ',', $assoc_args['servers'] ) ;
