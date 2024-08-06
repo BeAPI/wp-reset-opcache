@@ -3,9 +3,10 @@ namespace BEAPI\Clear_Opcache;
 
 class Clear_Opcache {
 
-	private $secret = RESET_OPCACHE_SECRET;
+	private $secret;
 
 	public function __construct() {
+		$this->secret = defined( 'RESET_OPCACHE_SECRET' ) ? RESET_OPCACHE_SECRET : '';
 		add_action( 'plugins_loaded', [ $this, 'clear_opcache'] );
 		if ( defined( 'WP_CLI' ) ) {
 			\WP_CLI::add_command( 'clear-opcache', [ $this, 'clear_command'] );
@@ -31,19 +32,29 @@ class Clear_Opcache {
 	/**
 	 * Command to clear opcache on 1 or several servers
 	 *
+	 * ## OPTIONS
+	 * [--host=<host>]
+	 * : Hostname (staging.mydomain.com). Required
+	 *
+	 * [--servers=<servers>]
+	 * : List of server names on which opcache must be reset (srv-www-1, srv-www-2). Required
+	 *
 	 * ## EXAMPLES
 	 *
-	 *  wp clear-opcache --url=https://uat.kiloutou.com --host=uat.kiloutou.com --servers=integ-www-01a,integ-www-01b
+	 *  wp clear-opcache --url=https://staging.mydomain.com --host=staging.mydomain.com --servers=srv-www-1,srv-www-2
 	 *
-	 * @param array $args
-	 * @param array $assoc_args
-	 * @throws \WP_CLI\ExitException
 	 * @author Ingrid Azéma
 	 */
 	public function clear_command( $args, $assoc_args ) {
-		if ( empty( $assoc_args ) || ( empty( $assoc_args['host'] ) && empty( $assoc_args['servers'] ) ) ) {
-			\WP_CLI::error( 'Please provide a host name (ex. --host=uat.kiloutou.com) and at least 1 server-name (ex. --servers=integ-www-01a)'  );
+		// Constant to be defined as env var
+		if ( empty( $this->secret ) ) {
+			\WP_CLI::error( 'Please define a constant named RESET_OPCACHE_SECRET with a string of your choosing' );
 		}
+
+		if ( empty( $assoc_args ) || ( empty( $assoc_args['host'] ) && empty( $assoc_args['servers'] ) ) ) {
+			\WP_CLI::error( 'Please provide a host name (ex. --host=staging.mydomain.com) and at least 1 server-name (ex. --servers=srv-www-1,srv-www-2)'  );
+		}
+
 		$servers = explode( ',', $assoc_args['servers'] ) ;
 
 		foreach ( $servers as $server_name ) {
@@ -78,8 +89,5 @@ class Clear_Opcache {
 	}
 
 }
-// Constant to be defined as env var
-if ( ! defined( 'RESET_OPCACHE_SECRET' ) ) {
-	return;
-}
+
 new Clear_Opcache();
