@@ -91,5 +91,3 @@ class Clear_Opcache {
 	}
 
 }
-
-new Clear_Opcache();
