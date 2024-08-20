@@ -1,7 +1,7 @@
 {
   "name": "beapi/wp-cli-reset-opcache",
   "description": "Reset opcache",
-  "type": "wp-cli-package",
+  "type": "wordpress-plugin",
   "homepage": "https://github.com/BeAPI/wp-cli-reset-opcache",
   "license": "MIT",
   "require": {

@@ -8,7 +8,7 @@ class Clear_Opcache {
 	public function __construct() {
 		$this->secret = defined( 'RESET_OPCACHE_SECRET' ) ? RESET_OPCACHE_SECRET : '';
 		if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
-			add_action('plugins_loaded', [$this, 'clear_opcache']);
+			add_action( 'plugins_loaded', [ $this, 'clear_opcache' ] );
 		}
 		if ( defined( 'WP_CLI' ) ) {
 			\WP_CLI::add_command( 'clear-opcache', [ $this, 'clear_command'] );
