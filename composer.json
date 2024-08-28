@@ -15,6 +15,6 @@
   ],
   "minimum-stability": "dev",
   "autoload": {
-    "files": [ "wp-cli-reset-opcache.php" ]
+    "files": [ "wp-reset-opcache.php" ]
   }
 }
