@@ -25,6 +25,4 @@ License: MIT
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once __DIR__ . '/command.php';
-
 new \BEAPI\Clear_Opcache\Clear_Opcache();
