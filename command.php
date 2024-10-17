@@ -19,7 +19,7 @@ class Clear_Opcache {
 			add_action( 'plugins_loaded', [ $this, 'clear_opcache' ] );
 		}
 		if ( defined( 'WP_CLI' ) ) {
-			\WP_CLI::add_command( 'clear-opcache', [ $this, 'clear_command'] );
+			\WP_CLI::add_command( 'clear-opcache', [ $this, 'clear_command'], 10, 2 );
 		}
 	}
 
