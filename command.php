@@ -1,17 +1,25 @@
 <?php
 namespace BEAPI\Clear_Opcache;
 
+/**
+ *
+ * Class Clear_Opcache
+ * @package BEAPI\Clear_Opcache
+ *
+ * @author Léonard Phoumpakka
+ *
+ */
 class Clear_Opcache {
 
 	private $secret;
 
 	public function __construct() {
-		$this->secret = defined( 'RESET_OPCACHE_SECRET' ) ? RESET_OPCACHE_SECRET : '';
+		$this->secret = RESET_OPCACHE_SECRET;
 		if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 			add_action( 'plugins_loaded', [ $this, 'clear_opcache' ] );
 		}
 		if ( defined( 'WP_CLI' ) ) {
-			\WP_CLI::add_command( 'clear-opcache', [ $this, 'clear_command'] );
+			\WP_CLI::add_command( 'clear-opcache', [ $this, 'clear_command'], 10, 2 );
 		}
 	}
 
@@ -20,7 +28,7 @@ class Clear_Opcache {
 	 *
 	 * @author Ingrid Azéma
 	 */
-	function clear_opcache() {
+	public function clear_opcache() {
 		if ( isset( $_GET['secret'] ) && $this->secret === $_GET['secret'] ) {
 			if ( opcache_reset() ) {
 				status_header( 202 );

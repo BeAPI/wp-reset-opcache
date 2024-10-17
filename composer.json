@@ -1,5 +1,5 @@
 {
-  "name": "beapi/wp-cli-reset-opcache",
+  "name": "beapi/wp-reset-opcache",
   "description": "Reset opcache",
   "type": "wordpress-plugin",
   "homepage": "https://github.com/BeAPI/wp-cli-reset-opcache",
