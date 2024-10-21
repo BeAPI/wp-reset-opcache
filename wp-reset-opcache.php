@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP CLI Reset Opcache
 Description: Reset opcache via WP-CLI or HTTP request.
-Version: 1.0.2
+Version: 1.0.5
 Author: Be API technical team
 License: MIT
 
@@ -26,7 +26,9 @@ License: MIT
  */
 
 if ( ! defined( 'RESET_OPCACHE_SECRET' ) ) {
-	defined( 'RESET_OPCACHE_SECRET', '' );
+	define( 'RESET_OPCACHE_SECRET', '' );
 }
+
+require 'command.php';
 
 new \BEAPI\Clear_Opcache\Clear_Opcache();

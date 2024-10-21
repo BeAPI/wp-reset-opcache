@@ -28,7 +28,7 @@ class Clear_Opcache {
 	 *
 	 * @author Ingrid Azéma
 	 */
-	public function clear_opcache() {
+	public function clear_opcache(): void {
 		if ( isset( $_GET['secret'] ) && $this->secret === $_GET['secret'] ) {
 			if ( opcache_reset() ) {
 				status_header( 202 );
@@ -55,7 +55,7 @@ class Clear_Opcache {
 	 *
 	 * @author Ingrid Azéma
 	 */
-	public function clear_command( $args, $assoc_args ) {
+	public function clear_command( $args, $assoc_args ): void {
 		// Constant to be defined as env var
 		if ( empty( $this->secret ) ) {
 			\WP_CLI::error( 'Please define a constant named RESET_OPCACHE_SECRET with a string of your choosing' );
@@ -97,5 +97,4 @@ class Clear_Opcache {
 			\WP_CLI::log( 'Failed to clear opcache on ' . $server_name );
 		}
 	}
-
 }
